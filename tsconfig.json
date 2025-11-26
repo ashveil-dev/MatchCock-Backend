@@ -1,38 +1,34 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
+  "ts-node": {
+    "files": true
+  },
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-
     "target": "es2019",
     "module": "commonjs",
     "types": [],
-
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
+    "baseUrl": "./src", 
+    "paths": {
+      "@apis" : ["./apis"]
+    },
 
-    // Recommended Options
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    
     "jsx": "react-jsx",
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
+
+    
   }
 }
