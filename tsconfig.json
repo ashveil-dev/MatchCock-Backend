@@ -18,7 +18,8 @@
     "baseUrl": "./src", 
     "paths": {
       "@apis" : ["./apis"],
-      "@type/*" : ["./type/*"]
+      "@type/*" : ["./type/*"],
+      "@routes/*" : ["./routes/*"]
     },
 
     "strict": true,
