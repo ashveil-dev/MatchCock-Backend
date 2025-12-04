@@ -2,6 +2,8 @@ import express from "express";
 import fetchTournamentList from "apis/fetchTournamentList";
 import type { TournamentListBodyType } from "@type/body";
 import { ITournamentData } from "@type/data";
+import fetchTournament from "@apis/fetchTournament";
+import { TournamentParamsType } from "@type/params";
 
 const router = express.Router()
 let globalTournamentList: undefined | ITournamentData[] = undefined
@@ -28,8 +30,8 @@ router.post<{}, any, TournamentListBodyType>("/", async (req, res) => {
             .filter((tournament) => (
                 (tournament.TOURNAMENT_NM !== null && (tournament.TOURNAMENT_NM.search(search ?? "") >= 0))
                 && ((stateFilter !== undefined && stateFilter.length !== 0) ? (tournament.STAT_NM !== null && stateFilter.includes(tournament.STAT_NM)) : true)
-                && (dateFilter?.from !== undefined ? (tournament.TOUR_DATE_FROM !== null && dateFilter.from <= dateStringToDate(tournament.TOUR_DATE_FROM)) : true)
-                && (dateFilter?.to !== undefined ? (tournament.TOUR_DATE_FROM !== null && dateStringToDate(tournament.TOUR_DATE_FROM) <= dateFilter.to) : true)
+                && (dateFilter?.from !== undefined ? (tournament.TOUR_DATE_FROM !== null && dateStringToDate(dateFilter.from) <= dateStringToDate(tournament.TOUR_DATE_FROM)) : true)
+                && (dateFilter?.to !== undefined ? (tournament.TOUR_DATE_FROM !== null && dateStringToDate(tournament.TOUR_DATE_FROM) <= dateStringToDate(dateFilter.to)) : true)
             )).sort((a, b) => {
                 if (order?.name && a.TOURNAMENT_NM && b.TOURNAMENT_NM) {
                     const r = a.TOURNAMENT_NM.localeCompare(b.TOURNAMENT_NM);
@@ -73,12 +75,32 @@ router.post<{}, any, TournamentListBodyType>("/", async (req, res) => {
         }
 
         return res.send({
-            data : {
+            data: {
                 tournamentList
             }
         })
     } catch (e) {
         return res.sendStatus(500)
+    }
+})
+
+router.get<TournamentParamsType, any>("/:id", async (req, res) => {
+    const { id }  = req.params;
+
+    if (id === undefined) {
+        return res.sendStatus(401);
+    }
+
+    try {
+        const response = await fetchTournament({ id });
+
+        return res.send({
+            data: {
+                tournament: response
+            }
+        })
+    } catch (e) {
+        return res.sendStatus(401);
     }
 })
 
