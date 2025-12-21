@@ -1,0 +1,1 @@
+{"root":["./src/app.ts","./src/apis/fetchgamelist.ts","./src/apis/fetchtournament.ts","./src/apis/fetchtournamentlist.ts","./src/apis/index.ts","./src/routes/gamerouter.ts","./src/routes/tournmanetrouter.ts","./src/type/body.d.ts","./src/type/data.d.ts","./src/type/params.d.ts"],"version":"5.9.3"}
